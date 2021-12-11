@@ -1,0 +1,55 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam defaultTextAlignment center
+'skinparam linetype ortho
+
+frame "Utenti" as fut {
+  [Utente]
+  [Creator]
+  [GestoreUtenti]
+  [GestoreFeed]
+  [RichiestaUpgrade]
+  [GestoreRichiesteUpgrade]
+}
+
+frame "Pubblicazioni" as fpu {
+  [Opera]
+  [Post]
+  [Evento]
+  [Creazione]
+  [GestorePost]
+  [GestoreEventi]
+  [GestoreOpere]
+}
+
+frame "Interazioni" as fin {
+  [Commento]
+  [GestoreInterazioni]
+  [RichiestaCollaborazione]
+  [GestoreCollaborazioni]
+}
+
+frame "Pagamenti" as fpa {
+  [Biglietto]
+  [Donazione]
+  [Ordine]
+  [GestorePagamenti]
+}
+
+database "DB\nUtenti" as dbut
+database "DB\nPubblicazioni" as dbpu
+database "DB\nInterazioni" as dbin
+database "DB\nPagamenti" as dbpa
+
+rectangle "MessageBroker Interazioni" as mbi
+
+fut -- dbut
+fpu -- dbpu
+fin - dbin
+fpa -- dbpa
+
+[GestoreInterazioni] -- mbi
+mbi - [Opera]
+mbi - [Post]
+mbi - [Evento]
+@enduml

@@ -1,0 +1,223 @@
+@startuml
+skinparam linetype ortho
+
+class Utente {
++ Id
++ Username
++ Nickname
++ E-mail
++ Password
++ Ruolo
++ ListaFans: Utente[]
++ ListaInspirers: Utente[]
++ IdCreator
+}
+
+class Creator {
++ Id
++ Nome
++ Cognome
++ Avatar
++ DataNascita
++ Biografia
++ NumeroFans
++ NumeroInspirers
++ TipologiaArtista
+}
+
+class Creazione {
++ IdCreator
++ IdPubblicazione
++ Tipologia [proprietario, collaboratore]
++ Simbolo [feat.,  ‘x’]
+}
+
+class Opera {
++ Nome
++ Lista Immagini
++ Tipologia
++ DataCreazione
++ Dimensioni
++ Descrizione
++ Acquistabile
++ Prezzo
++ Tecnica
++ Informazioni tecniche
++ Quantità
+}
+
+class Post {
++ Titolo
++ Testo
+}
+
+class Evento {
++ Nome
++ Descrizione
++ Immagine
++ Luogo [Nome]
++ Coordinate
++ DataOraInizio
++ DataOraFine [?]
++ BookingURL
+}
+
+class Commento {
++ Id
++ IdUtente
++ Messaggio
+}
+
+class Pubblicazione {
++ Id
++ IdCommenti: Lista
++ Timestamp
+}
+
+class Likeable {
++ ListaLike: IdUtente[]
+}
+
+class GestoreInterazioni {
++ Aggiungere un like()
++ Rimuovere un like()
++ Aggiungere un commento()
++ Rimuovere un commento()
++ Aggiungere un follow()
++ Rimuovere un follow()
+}
+
+class RichiestaCollaborazione {
++ Id
++ IdMittente
++ IdDestinatario [?]
++ Titolo
++ Descrizione
++ Timestamp
++ Contatto
++ Categoria [?]
+}
+
+class GestoreCollaborazioni {
++ Inviare una richiesta di collaborazione ad un utente()
++ Inviare una richiesta di collaborazione in broadcast()
++ Mostrare la lista delle richieste di collaborazione pubbliche()
+}
+
+class GestorePubblicazioni {
++ Elimina pubblicazione()
+}
+
+class GestorePost {
++ Creare post()
++ Modifica post()
+}
+
+class GestoreOpere {
++ Creare opera()
++ Modifica opera()
+}
+
+class GestoreEventi {
++ Creare evento()
++ Modifica evento()
+}
+
+class Biglietto {
++ Id
++ IdEvento
++ IdUtente
++ Importo
++ Timestamp
++ Posto [?]
+}
+
+class Donazione {
++ Id
++ IdUtenteMittente
++ IdUtenteCreator
++ Importo
++ Messaggio
++ Timestamp
+}
+
+class Ordine {
++ Id
++ IdOpera
++ IdUtente
++ Importo
++ IndirizzoDestinazione
++ Timestamp
+}
+
+class GestorePagamenti {
++ Permettere l’acquisto di un bene()
++ Permettere l’invio di una donazione()
++ Permettere l’acquisto di un biglietto()
+}
+
+class GestoreFeed {
++ Generare la lista dei contenuti mostrati nell’homepage dell’utente()
+}
+
+class RichiestaUpgrade {
++ Id
++ IdUtente
++ Nome
++ Cognome
++ Biografia
++ Piccolo portfolio [file]
++ Testo di motivazione
++ Nome d’arte
++ DataNascita
++ Username
++ Avatar
++ Status
+}
+
+class GestoreRichiesteUpgrade {
++ Permettere all’utente di generare una richiesta di upgrade a creator()
++ Eseguire l’upgrade di un utente a creator()
++ Rifiutare una richiesta di upgrade()
+}
+
+ class GestoreUtenti {
++ Permettere all’utente la registrazione()
++ Permettere all’utente il login()
++ Permettere la registrazione tramite API Google()
++ Permettere la registrazione tramite API Facebook()
++ Permettere all’utente di eseguire il logout()
++ Permettere all’utente di cancellare l’account()
+}
+
+Opera -up-> Pubblicazione
+Post -up-> Pubblicazione
+Evento -up-> Pubblicazione
+Pubblicazione -up-> Likeable
+Commento -up-> Likeable
+GestorePost -up-> GestorePubblicazioni
+GestoreOpere -up-> GestorePubblicazioni
+GestoreEventi -up-> GestorePubblicazioni
+
+GestoreInterazioni "0..*" -- "1..1" Pubblicazione
+GestoreInterazioni "0..*" -- "1..1" Likeable
+GestoreInterazioni "0..*" -- "0..1" Utente
+GestorePost "0..*" -- "0..1" Utente
+GestorePost "0..*" -- "1..1" Post
+GestoreOpere "0..*" -- "0..1" Utente
+GestoreOpere "0..*" -- "1..1" Opera
+GestoreEventi "0..*" -- "0..1" Utente
+GestoreEventi "0..*" -- "1..1" Evento
+GestorePagamenti "0..*" -- "0..1" Utente
+GestorePagamenti "0..*" -- "1..1" Donazione
+GestorePagamenti "0..*" -- "1..1" Ordine
+GestorePagamenti "0..*" -- "1..1" Biglietto
+GestoreFeed "0..*" -- "1..1" Utente
+GestoreFeed "0..*" -- "0..1" Pubblicazione
+GestoreRichiesteUpgrade "0..*" -- "0..1" Utente
+GestoreRichiesteUpgrade "0..*" -- "1..1" RichiestaUpgrade
+GestoreRichiesteUpgrade "0..*" -- "1..1" Creator
+GestoreUtenti "0..*" -- "1..1" Utente
+GestoreCollaborazioni "0..*" -- "1..1" RichiestaCollaborazione
+GestoreCollaborazioni "0..*" -- "0..1" Utente
+@enduml
