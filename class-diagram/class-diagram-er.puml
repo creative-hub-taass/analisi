@@ -1,13 +1,12 @@
 @startuml
-'skinparam linetype ortho
+skinparam ranksep 80
 
 class Utente {
 + Username
 + Nickname
 + E-mail
 + Password
-+ Ruolo
-\t\t\t\t\t\t\t\t
++ Ruolo \t\t\t\t\t\t\t\t\t\t\t\t\t\t
 }
 
 class Creator {
@@ -61,7 +60,7 @@ class Commento {
 }
 
 class Pubblicazione {
-+ Timestamp
++ Timestamp \t\t\t\t\t\t
 }
 
 class Likeable {
@@ -109,28 +108,30 @@ class RichiestaUpgrade {
 + Status
 }
 
-Utente "0..*" o- "1..1" Utente : inspirer\\t
-Utente "0..*" o- "1..1" Utente : follower
-Utente "0..1" *-- "1..1" Creator
-Creazione "1..1" o-- "0..*" Utente
-Pubblicazione "1..*" *- "1..1" Creazione
-Commento "1..1" o-- "0..*" Utente
-Opera -up|> Pubblicazione
+Opera --up|> Pubblicazione
 Post -up-|> Pubblicazione
 Evento -up-|> Pubblicazione
 Pubblicazione -up-|> Likeable
 Commento -up-|> Likeable
-Likeable "0..*" o-- "0..*" Utente
-Pubblicazione "0..*" *-right- "1..1" Commento : ha\t >
-Biglietto "1..1" o-up- "0..*" Evento
-Biglietto "1..1" o-down- "0..*" Utente
-Donazione "2..2" o-up- "0..*" Utente
-Ordine "1..1" o-right- "0..*" Utente : \t\t
-Ordine "1..1" o--up- "0..*" Opera
-RichiestaUpgrade "1..1" o-up- "0..*" Utente : \t\t
-RichiestaCollaborazione "1..1" o-up- "0..*" Utente : mittente
-RichiestaCollaborazione "0..1" o-up- "0..*" Utente : destinatario
+Utente "0..*" o- "1..1" Utente : inspirer\t
+Utente "0..*" o- "1..1" Utente : follower
+Utente "0..1" *-left- "1..1" Creator : > è un\t
+Creazione "1..1" o-down- "0..*" Utente : < crea
+Pubblicazione "1..*" *-down- "1..1" Creazione : < di
+Commento "1..1" o-down- "0..*" Utente : < autore di
+Likeable "0..*" o- "0..*" Utente
+Pubblicazione "0..*" *-right- "1..1" Commento : < su\t
+Biglietto "1..1" o-up- "0..*" Evento : per >
+Biglietto "1..1" o-down- "0..*" Utente : < prenota
+Donazione "1..1" o-up- "0..*" Utente : mittente di <
+Donazione "1..1" o-up- "0..*" Utente : destinatario di <
+Ordine "1..1" o--down- "0..*" Utente : < ordina
+Ordine "1..1" o-up- "0..*" Opera : riguarda >
+RichiestaUpgrade "1..1" o-up- "0..*" Utente : < richiede
+RichiestaCollaborazione "1..1" o-up- "0..*" Utente : mittente di <
+RichiestaCollaborazione "0..1" o-up- "0..*" Utente : destinatario di <
 
+Post -[hidden]left- Evento
 Opera -[hidden]right- Evento
 Biglietto -[hidden]right- Creazione
 @enduml
