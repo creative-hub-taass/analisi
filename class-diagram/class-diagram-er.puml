@@ -1,14 +1,13 @@
 @startuml
-'skinparam linetype ortho'
+'skinparam linetype ortho
 
 class Utente {
-+ Username [casuale, modificabile da creator]
-+ Nickname [o nome d’arte se creator]
++ Username
++ Nickname
 + E-mail
 + Password
-+ Ruolo [utente/admin]
-+ ListaFans: Utente[]
-+ ListaInspirers: Utente[]
++ Ruolo
+\t\t\t\t\t\t\t\t
 }
 
 class Creator {
@@ -23,8 +22,8 @@ class Creator {
 }
 
 class Creazione {
-+ Tipologia [proprietario, collaboratore]
-+ Simbolo [feat.,  ‘x’]
++ Tipologia
++ Simbolo
 }
 
 class Opera {
@@ -50,7 +49,7 @@ class Evento {
 + Nome
 + Descrizione
 + Immagine
-+ Luogo [Nome]
++ Luogo
 + Coordinate
 + DataOraInizio
 + DataOraFine [?]
@@ -62,21 +61,10 @@ class Commento {
 }
 
 class Pubblicazione {
-+  ListaCommenti
 + Timestamp
 }
 
 class Likeable {
-+ ListaLike
-}
-
-class GestoreInterazioni {
-+ Aggiungere un like()
-+ Rimuovere un like()
-+ Aggiungere un commento()
-+ Rimuovere un commento()
-+ Aggiungere un follow()
-+ Rimuovere un follow()
 }
 
 class RichiestaCollaborazione {
@@ -85,31 +73,6 @@ class RichiestaCollaborazione {
 + Timestamp
 + Contatto
 + Categoria [?]
-}
-
-class GestoreCollaborazioni {
-+ Inviare una richiesta di collaborazione ad un utente()
-+ Inviare una richiesta di collaborazione in broadcast()
-+ Mostrare la lista delle richieste di collaborazione pubbliche()
-}
-
-class GestorePubblicazioni {
-+ Elimina pubblicazione()
-}
-
-class GestorePost {
-+ Creare post()
-+ Modifica post()
-}
-
-class GestoreOpere {
-+ Creare opera()
-+ Modifica opera()
-}
-
-class GestoreEventi {
-+ Creare evento()
-+ Modifica evento()
 }
 
 class Biglietto {
@@ -133,21 +96,11 @@ class Ordine {
 + Timestamp
 }
 
-class GestorePagamenti {
-+ Permettere l’acquisto di un bene()
-+ Permettere l’invio di una donazione()
-+ Permettere l’acquisto di un biglietto()
-}
-
-class GestoreFeed {
-+ Generare la lista dei contenuti mostrati nell’homepage dell’utente()
-}
-
 class RichiestaUpgrade {
 + Nome
 + Cognome
 + Biografia
-+ Piccolo portfolio [file]
++ Piccolo portfolio
 + Testo di motivazione
 + Nome d’arte
 + DataNascita
@@ -156,60 +109,28 @@ class RichiestaUpgrade {
 + Status
 }
 
-class GestoreRichiesteUpgrade {
-+ Permettere all’utente di generare una richiesta di upgrade a creator()
-+ Eseguire l’upgrade di un utente a creator()
-+ Rifiutare una richiesta di upgrade()
-}
+Utente "0..*" o- "1..1" Utente : inspirer\\t
+Utente "0..*" o- "1..1" Utente : follower
+Utente "0..1" *-- "1..1" Creator
+Creazione "1..1" o-- "0..*" Utente
+Pubblicazione "1..*" *- "1..1" Creazione
+Commento "1..1" o-- "0..*" Utente
+Opera -up|> Pubblicazione
+Post -up-|> Pubblicazione
+Evento -up-|> Pubblicazione
+Pubblicazione -up-|> Likeable
+Commento -up-|> Likeable
+Likeable "0..*" o-- "0..*" Utente
+Pubblicazione "0..*" *-right- "1..1" Commento : ha\t >
+Biglietto "1..1" o-up- "0..*" Evento
+Biglietto "1..1" o-down- "0..*" Utente
+Donazione "2..2" o-up- "0..*" Utente
+Ordine "1..1" o-right- "0..*" Utente : \t\t
+Ordine "1..1" o--up- "0..*" Opera
+RichiestaUpgrade "1..1" o-up- "0..*" Utente : \t\t
+RichiestaCollaborazione "1..1" o-up- "0..*" Utente : mittente
+RichiestaCollaborazione "0..1" o-up- "0..*" Utente : destinatario
 
- class GestoreUtenti {
-+ Permettere all’utente la registrazione()
-+ Permettere all’utente il login()
-+ Permettere la registrazione tramite API Google()
-+ Permettere la registrazione tramite API Facebook()
-+ Permettere all’utente di eseguire il logout()
-+ Permettere all’utente di cancellare l’account()
-}
-
-Utente "0..1" -- "1..1" Creator
-Creazione "1..1" -- "0..*" Utente : solo se creator
-Pubblicazione "1..*" -- "1..1" Creazione
-Commento "1..1" -- "0..*" Utente
-Opera -up-> Pubblicazione
-Post -up-> Pubblicazione
-Evento -up-> Pubblicazione
-Pubblicazione -up-> Likeable
-Commento -up-> Likeable
-Commento "1..1" -- "0..*" Pubblicazione
-GestoreInterazioni "0..*" -- "1..1" Pubblicazione
-GestoreInterazioni "0..*" -- "1..1" Likeable
-GestoreInterazioni "0..*" -- "0..1" Utente
-GestorePost -up-> GestorePubblicazioni
-GestorePost "0..*" -- "0..1" Utente
-GestorePost "0..*" -- "1..1" Post
-GestoreOpere -up-> GestorePubblicazioni
-GestoreOpere "0..*" -- "0..1" Utente
-GestoreOpere "0..*" -- "1..1" Opera
-GestoreEventi -up-> GestorePubblicazioni
-GestoreEventi "0..*" -- "0..1" Utente
-GestoreEventi "0..*" -- "1..1" Evento
-Biglietto "1..1" -- "0..*" Evento
-Biglietto "1..1" -- "0..*" Utente
-Donazione "2..2" -- "0..*" Utente
-Ordine "1..1" -- "0..*" Utente
-Ordine "1..1" -- "0..*" Opera
-GestorePagamenti "0..*" -- "0..1" Utente
-GestorePagamenti "0..*" -- "1..1" Donazione
-GestorePagamenti "0..*" -- "1..1" Ordine
-GestorePagamenti "0..*" -- "1..1" Biglietto
-GestoreFeed "0..*" -- "1..1" Utente
-GestoreFeed "0..*" -- "0..1" Pubblicazione
-RichiestaUpgrade "1..1" -- "0..*" Utente
-GestoreRichiesteUpgrade "0..*" -- "0..1" Utente
-GestoreRichiesteUpgrade "0..*" -- "1..1" RichiestaUpgrade
-GestoreRichiesteUpgrade "0..*" -- "1..1" Creator
-GestoreUtenti "0..*" -- "1..1" Utente
-RichiestaCollaborazione "1..2" -- "0..*" Utente
-GestoreCollaborazioni "0..*" -- "1..1" RichiestaCollaborazione
-GestoreCollaborazioni "0..*" -- "0..1" Utente
+Opera -[hidden]right- Evento
+Biglietto -[hidden]right- Creazione
 @enduml

@@ -1,13 +1,12 @@
 @startuml
 skinparam componentStyle rectangle
 skinparam defaultTextAlignment center
-'skinparam linetype ortho
+skinparam linetype ortho
 
 frame "Utenti" as fut {
   [Utente]
   [Creator]
   [GestoreUtenti]
-  [GestoreFeed]
   [RichiestaUpgrade]
   [GestoreRichiesteUpgrade]
 }
@@ -20,6 +19,7 @@ frame "Pubblicazioni" as fpu {
   [GestorePost]
   [GestoreEventi]
   [GestoreOpere]
+  [GestoreFeed]
 }
 
 frame "Interazioni" as fin {
@@ -28,6 +28,8 @@ frame "Interazioni" as fin {
   [RichiestaCollaborazione]
   [GestoreCollaborazioni]
 }
+
+[GestoreInterazioni] -[hidden]up- [Commento]
 
 frame "Pagamenti" as fpa {
   [Biglietto]
@@ -41,15 +43,36 @@ database "DB\nPubblicazioni" as dbpu
 database "DB\nInterazioni" as dbin
 database "DB\nPagamenti" as dbpa
 
-rectangle "MessageBroker Interazioni" as mbi
+rectangle "MessageBroker\t\t\t\t\t\t\t\n\n\n\n" as mb1
+rectangle "MessageBroker\t\t\t\t\t\t\t\n\n\n\n" as mb2
 
-fut -- dbut
-fpu -- dbpu
-fin - dbin
-fpa -- dbpa
+fin -[hidden]down- mb1
+mb1 -[hidden]left- fut
 
-[GestoreInterazioni] -- mbi
-mbi - [Opera]
-mbi - [Post]
-mbi - [Evento]
+fut -down- fpa
+
+fut -up- dbut
+fpu -right- dbpu
+fin -left- dbin
+fpa -left- dbpa
+
+mb1 ---up- [GestoreInterazioni] : interazione
+mb1 ---down- [Opera] : interazione
+mb1 ---down- [Post] : interazione
+mb1 ---down- [Evento] : interazione
+mb1 ---down- [GestoreFeed] : pubblicazione
+mb1 -right- [Utente] : pubblicazione/\ncollaborazione
+
+mb2 -right- [GestorePagamenti] : donazione
+mb2 -right- [Utente] : donazione
+
+[GestorePagamenti] .. [Utente]
+[GestorePagamenti] .. [Opera]
+[GestorePagamenti] .. [Evento]
+
+[GestoreCollaborazioni] -- mb1 : collaborazione
+
+[GestoreOpere] -- mb1 : pubblicazione
+[GestoreEventi] -- mb1 : pubblicazione
+[GestorePost] -- mb1 : pubblicazione
 @enduml
