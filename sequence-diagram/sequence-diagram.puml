@@ -1,0 +1,38 @@
+@startuml
+autonumber
+
+title Elaborazione richiesta feed utente
+
+participant ":Front-end" as frontend
+participant ":Microservice\nPubblicazioni" as pubblicazioni
+queue ":MessageBroker" as mb
+participant ":Microservice\nInterazioni" as interazioni
+participant ":Microservice\nUtenti" as utenti
+
+activate frontend
+frontend -> pubblicazioni : Richiesta feed utente
+activate pubblicazioni
+pubblicazioni -> mb : Richiesta dati utente e lista inspirers
+activate mb
+mb -> utenti : Richiesta dati utente e lista inspirers
+activate utenti
+utenti --> mb : Dati utente e lista inspirers
+deactivate utenti
+mb --> pubblicazioni : Dati utente e lista inspirers
+deactivate mb
+pubblicazioni -> pubblicazioni : Richiesta pubblicazioni a DB
+loop per ogni pubblicazione
+	pubblicazioni -> mb : Richiesta numero like e commenti
+	activate mb
+	mb -> interazioni : Richiesta numero like e commenti
+	activate interazioni
+	interazioni --> mb : Numero like e commenti
+	deactivate interazioni
+	mb --> pubblicazioni : Numero like e commenti
+	deactivate mb
+end
+pubblicazioni -> pubblicazioni : Elaborazione feed
+pubblicazioni --> frontend : Feed utente
+deactivate pubblicazioni
+deactivate frontend
+@enduml
