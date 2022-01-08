@@ -79,12 +79,12 @@ class Likeable {
 }
 
 class GestoreInterazioni {
-+ Aggiungere un like()
-+ Rimuovere un like()
-+ Aggiungere un commento()
-+ Rimuovere un commento()
-+ Aggiungere un follow()
-+ Rimuovere un follow()
++ Aggiungere_like()
++ Rimuovere_like()
++ Aggiungere_commento()
++ Rimuovere_commento()
++ Aggiungere_follow()
++ Rimuovere_follow()
 }
 
 class RichiestaCollaborazione {
@@ -99,28 +99,28 @@ class RichiestaCollaborazione {
 }
 
 class GestoreCollaborazioni {
-+ Inviare una richiesta di collaborazione ad un utente()
-+ Inviare una richiesta di collaborazione in broadcast()
-+ Mostrare la lista delle richieste di collaborazione pubbliche()
++ Richiesta_collaborazione()
++ Richiesta_collaborazione_broadcast()
++ Lista_richieste_broadcast()
 }
 
 class GestorePubblicazioni {
-+ Elimina pubblicazione()
++ Elimina_pubblicazione()
 }
 
 class GestorePost {
-+ Creare post()
-+ Modifica post()
++ Crea_post()
++ Modifica_post()
 }
 
 class GestoreOpere {
-+ Creare opera()
-+ Modifica opera()
++ Crea_pera()
++ Modifica_opera()
 }
 
 class GestoreEventi {
-+ Creare evento()
-+ Modifica evento()
++ Crea_evento()
++ Modifica_evento()
 }
 
 class Biglietto {
@@ -151,13 +151,13 @@ class Ordine {
 }
 
 class GestorePagamenti {
-+ Permettere l’acquisto di un bene()
-+ Permettere l’invio di una donazione()
-+ Permettere l’acquisto di un biglietto()
++ Acquista_opera()
++ Invia_donazione()
++ Acquista_biglietto()
 }
 
 class GestoreFeed {
-+ Generare la lista dei contenuti mostrati nell’homepage dell’utente()
++ Lista_feed()
 }
 
 class RichiestaUpgrade {
@@ -176,18 +176,18 @@ class RichiestaUpgrade {
 }
 
 class GestoreRichiesteUpgrade {
-+ Permettere all’utente di generare una richiesta di upgrade a creator()
-+ Eseguire l’upgrade di un utente a creator()
-+ Rifiutare una richiesta di upgrade()
++ Richiesta_upgrade()
++ Accetta_upgrade()
++ Rifiuta_upgrade()
 }
 
  class GestoreUtenti {
-+ Permettere all’utente la registrazione()
-+ Permettere all’utente il login()
-+ Permettere la registrazione tramite API Google()
-+ Permettere la registrazione tramite API Facebook()
-+ Permettere all’utente di eseguire il logout()
-+ Permettere all’utente di cancellare l’account()
++ Registrazione()
++ Login()
++ Registrazione_Google()
++ Registrazione_Facebook()
++ Logout()
++ Cancella_account()
 }
 
 Opera -up-> Pubblicazione
