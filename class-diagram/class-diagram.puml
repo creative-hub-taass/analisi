@@ -23,6 +23,7 @@ class Creator {
 + NumeroFans
 + NumeroInspirers
 + TipologiaArtista
++ EmailPagamento
 }
 
 class Creazione {
@@ -43,6 +44,7 @@ class Opera {
 + Prezzo
 + Tecnica
 + Informazioni tecniche
++ EmailPagamento
 + Quantità
 }
 
@@ -123,15 +125,6 @@ class GestoreEventi {
 + Modifica_evento()
 }
 
-class Biglietto {
-+ Id
-+ IdEvento
-+ IdUtente
-+ Importo
-+ Timestamp
-+ Posto [?]
-}
-
 class Donazione {
 + Id
 + IdUtenteMittente
@@ -153,7 +146,6 @@ class Ordine {
 class GestorePagamenti {
 + Acquista_opera()
 + Invia_donazione()
-+ Acquista_biglietto()
 }
 
 class GestoreFeed {
@@ -186,7 +178,6 @@ class GestoreRichiesteUpgrade {
 + Login()
 + Registrazione_Google()
 + Registrazione_Facebook()
-+ Logout()
 + Cancella_account()
 }
 
@@ -211,7 +202,6 @@ GestoreEventi "0..*" -- "1..1" Evento
 GestorePagamenti "0..*" -- "0..1" Utente
 GestorePagamenti "0..*" -- "1..1" Donazione
 GestorePagamenti "0..*" -- "1..1" Ordine
-GestorePagamenti "0..*" -- "1..1" Biglietto
 GestoreFeed "0..*" -- "1..1" Utente
 GestoreFeed "0..*" -- "0..1" Pubblicazione
 GestoreRichiesteUpgrade "0..*" -- "0..1" Utente

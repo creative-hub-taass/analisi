@@ -20,6 +20,7 @@ class Creator {
 + NumeroFans
 + NumeroInspirers
 + TipologiaArtista
++ EmailPagamento
 }
 
 class Creazione {
@@ -38,6 +39,7 @@ class Opera {
 + Prezzo
 + Tecnica
 + Informazioni tecniche
++ EmailPagamento
 + Quantità
 }
 
@@ -136,7 +138,6 @@ class Ordine {
 class GestorePagamenti {
 + Permettere l’acquisto di un bene()
 + Permettere l’invio di una donazione()
-+ Permettere l’acquisto di un biglietto()
 }
 
 class GestoreFeed {
@@ -167,7 +168,6 @@ class GestoreRichiesteUpgrade {
 + Permettere all’utente il login()
 + Permettere la registrazione tramite API Google()
 + Permettere la registrazione tramite API Facebook()
-+ Permettere all’utente di eseguire il logout()
 + Permettere all’utente di cancellare l’account()
 }
 
@@ -201,7 +201,6 @@ Ordine "1..1" -- "0..*" Opera
 GestorePagamenti "0..*" -- "0..1" Utente
 GestorePagamenti "0..*" -- "1..1" Donazione
 GestorePagamenti "0..*" -- "1..1" Ordine
-GestorePagamenti "0..*" -- "1..1" Biglietto
 GestoreFeed "0..*" -- "1..1" Utente
 GestoreFeed "0..*" -- "0..1" Pubblicazione
 RichiestaUpgrade "1..1" -- "0..*" Utente

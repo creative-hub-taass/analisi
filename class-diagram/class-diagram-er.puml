@@ -18,6 +18,7 @@ class Creator {
 + NumeroFans
 + NumeroInspirers
 + TipologiaArtista
++ EmailPagamento
 }
 
 class Creazione {
@@ -36,6 +37,7 @@ class Opera {
 + Prezzo
 + Tecnica
 + Informazioni tecniche
++ EmailPagamento
 + Quantità
 }
 
@@ -74,12 +76,6 @@ class RichiestaCollaborazione {
 + Categoria [?]
 }
 
-class Biglietto {
-+ CodiceIdentificativo
-+ Importo
-+ Timestamp
-+ Posto [?]
-}
 
 class Donazione {
 + CodiceIdentificativo
