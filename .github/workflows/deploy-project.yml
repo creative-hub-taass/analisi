@@ -3,6 +3,7 @@ name: Deploy project
 on:
   repository_dispatch:
   workflow_dispatch:
+  push:
 
 jobs:
   deploy-backend:
