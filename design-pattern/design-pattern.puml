@@ -22,6 +22,8 @@ frame "Pubblicazioni" as fpu {
   [GestoreFeed]
 }
 
+[Opera] -[hidden]left- [Creazione]
+
 frame "Interazioni" as fin {
   [Commento]
   [GestoreInterazioni]
@@ -35,17 +37,17 @@ frame "Pagamenti" as fpa {
   [Donazione]
   [Ordine]
   [GestorePagamenti]
-  [ ]
 }
 
+[Donazione] -[hidden]up- [Ordine]
 
 database "DB\nUtenti" as dbut
 database "DB\nPubblicazioni" as dbpu
 database "DB\nInterazioni" as dbin
 database "DB\nPagamenti" as dbpa
 
-rectangle "\nMessageBroker\n\t\t\t\t\t\t\t\t" as mb1
-rectangle "MessageBroker\t" as mb2
+rectangle "\nMessageBroker\n\t\t\t\t\t\t\t" as mb1
+rectangle "MessageBroker" as mb2
 
 fin -[hidden]down- mb1
 mb1 -[hidden]left- fut

@@ -1,5 +1,4 @@
 @startuml
-skinparam ranksep 80
 
 class Utente {
 + Username
@@ -117,8 +116,6 @@ Pubblicazione "1..*" *-down- "1..1" Creazione : < di
 Commento "1..1" o-down- "0..*" Utente : < autore di
 Likeable "0..*" o- "0..*" Utente
 Pubblicazione "0..*" *-right- "1..1" Commento : < su\t
-Biglietto "1..1" o-up- "0..*" Evento : per >
-Biglietto "1..1" o-down- "0..*" Utente : < prenota
 Donazione "1..1" o-up- "0..*" Utente : mittente di <
 Donazione "1..1" o-up- "0..*" Utente : destinatario di <
 Ordine "1..1" o--down- "0..*" Utente : < ordina
@@ -129,5 +126,4 @@ RichiestaCollaborazione "0..1" o-up- "0..*" Utente : destinatario di <
 
 Post -[hidden]left- Evento
 Opera -[hidden]right- Evento
-Biglietto -[hidden]right- Creazione
 @enduml
