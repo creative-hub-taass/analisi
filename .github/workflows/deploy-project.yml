@@ -33,11 +33,6 @@ jobs:
           repository: creative-hub-taass/api-gateway
           path: 'api-gateway'
           token: ${{ secrets.GH_PAT }}
-      - uses: actions/checkout@v3
-        with:
-          repository: creative-hub-taass/message-broker
-          path: 'message-broker'
-          token: ${{ secrets.GH_PAT }} 
       - run: |
           curl https://get.okteto.com -sSfL | sh
           okteto login --token ${{ secrets.OKTETO_TOKEN }}
