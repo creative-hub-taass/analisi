@@ -85,8 +85,6 @@ class GestoreInterazioni {
 + Rimuovere_like()
 + Aggiungere_commento()
 + Rimuovere_commento()
-+ Aggiungere_follow()
-+ Rimuovere_follow()
 }
 
 class RichiestaCollaborazione {
@@ -179,6 +177,8 @@ class GestoreRichiesteUpgrade {
 + Registrazione_Google()
 + Registrazione_Facebook()
 + Cancella_account()
++ Aggiungere_follow()
++ Rimuovere_follow()
 }
 
 Opera -up-> Pubblicazione
@@ -192,7 +192,6 @@ GestoreEventi -up-> GestorePubblicazioni
 
 GestoreInterazioni "0..*" -- "1..1" Pubblicazione
 GestoreInterazioni "0..*" -- "1..1" Likeable
-GestoreInterazioni "0..*" -- "0..1" Utente
 GestorePost "0..*" -- "0..1" Utente
 GestorePost "0..*" -- "1..1" Post
 GestoreOpere "0..*" -- "0..1" Utente
