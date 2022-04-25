@@ -3,6 +3,16 @@ name: Deploy project
 on:
   repository_dispatch:
   workflow_dispatch:
+    inputs:
+      gatewayURL:
+        type: choice
+        options:
+          - https://api-gateway-taass-acontenti.cloud.okteto.net
+          - https://api-gateway-taass-zathsl.cloud.okteto.net
+          - https://api-gateway-taass-alessiofamiani.cloud.okteto.net
+        required: true
+        description: API Gateway URL
+        
 
 jobs:
   deploy-backend:
@@ -38,7 +48,6 @@ jobs:
           okteto login --token ${{ secrets.OKTETO_TOKEN }}
           okteto namespace taass-acontenti
           okteto kubeconfig
-      - run: |
-          export GATEWAY_URL=https://api-gateway-taass-acontenti.cloud.okteto.net
-          for f in ./**/orchestration/*.yaml; do cat $f | envsubst | kubectl apply -f -; done
-  
+      - run: for f in ./**/orchestration/*.yaml; do cat $f | envsubst | kubectl apply -f -; done
+        env:
+          GATEWAY_URL: ${{ github.event.inputs.gatewayURL }}
