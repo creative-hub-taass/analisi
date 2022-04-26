@@ -47,6 +47,7 @@ jobs:
           okteto login --token ${{ secrets.OKTETO_TOKEN }}
           okteto namespace ${{ github.event.inputs.namespace }}
           okteto kubeconfig
+      - run: kubectl delete all --all
       - run: for f in ./**/orchestration/*.yaml; do cat $f | envsubst | kubectl apply -f -; done
         env:
           GATEWAY_URL: ${{ format('https://api-gateway-{0}.cloud.okteto.net', github.event.inputs.namespace) }}
