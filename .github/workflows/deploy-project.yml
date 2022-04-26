@@ -12,9 +12,14 @@ on:
           - taass-alessiofamiani
         required: true
         description: Okteto namespace
+      loadSampleData:
+        type: boolean
+        required: true
+        description: Load sample data
 
 jobs:
-  deploy-backend:
+  deploy:
+    name: Deploy on Okteto
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -42,6 +47,11 @@ jobs:
           repository: creative-hub-taass/api-gateway
           path: 'api-gateway'
           token: ${{ secrets.GH_PAT }}
+      - uses: actions/checkout@v3
+        with:
+          repository: creative-hub-taass/front-end
+          path: 'front-end'
+          token: ${{ secrets.GH_PAT }}
       - run: |
           curl https://get.okteto.com -sSfL | sh
           okteto login --token ${{ secrets.OKTETO_TOKEN }}
@@ -51,3 +61,19 @@ jobs:
       - run: for f in ./**/orchestration/*.yaml; do cat $f | envsubst | kubectl apply -f -; done
         env:
           GATEWAY_URL: ${{ format('https://api-gateway-{0}.cloud.okteto.net', github.event.inputs.namespace) }}
+  load-sample-data:
+    name: Load sample data
+    runs-on: ubuntu-latest
+    if: github.event.inputs.loadSampleData
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: creative-hub-taass/sample-data-bot
+          path: .
+          token: ${{ secrets.GH_PAT }}
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+      - run: python -m pip install --upgrade pipenv wheel
+      - run: pipenv install --deploy --dev
+      - run: pipenv run main.py --api-url ${{ format('https://api-gateway-{0}.cloud.okteto.net', github.event.inputs.namespace) }}
