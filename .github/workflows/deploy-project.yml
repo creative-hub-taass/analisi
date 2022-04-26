@@ -15,6 +15,7 @@ on:
       loadSampleData:
         type: boolean
         required: true
+        default: true
         description: Load sample data
 
 jobs:
