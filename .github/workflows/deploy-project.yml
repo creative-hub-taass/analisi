@@ -64,7 +64,7 @@ jobs:
           GATEWAY_URL: ${{ format('https://api-gateway-{0}.cloud.okteto.net', github.event.inputs.namespace) }}
   load-sample-data:
     name: Load sample data
-    if: ${{ github.event.inputs.loadSampleData == true }}
+    if: ${{ github.event.inputs.loadSampleData == 'true' }}
     needs: [deploy]
     runs-on: ubuntu-latest
     steps:
