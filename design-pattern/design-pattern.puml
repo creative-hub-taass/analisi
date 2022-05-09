@@ -47,32 +47,28 @@ database "DB\nInterazioni" as dbin
 database "DB\nPagamenti" as dbpa
 
 rectangle "\nMessageBroker\n\t\t\t\t\t\t\t" as mb1
-rectangle "MessageBroker" as mb2
 
 fin -[hidden]down- mb1
 mb1 -[hidden]left- fut
 fpa -[hidden]up- fpu
 fut -[hidden]down- fpa
+dbpa -[hidden]right- dbpu
 
 fut -up- dbut
 fpu -down- dbpu
 fin -left- dbin
 fpa --down- dbpa
 
-mb1 -up- [GestoreInterazioni] : interazione
-mb1 --down- [Opera] : interazione
-mb1 --down- [Post] : interazione
-mb1 --down- [Evento] : interazione
-mb1 --down- [GestoreFeed] : pubblicazione
+mb1 -[hidden]up- [GestoreInterazioni]
 mb1 -right- [Utente] : pubblicazione/\ncollaborazione
+[GestoreRichiesteUpgrade] -[hidden]down- [Utente]
+[Ordine] -[hidden]up- [Utente]
+[GestoreRichiesteUpgrade] -[hidden]right- [RichiestaCollaborazione]
 
-mb2 --down- [GestorePagamenti] : donazione
-mb2 -up- [Utente] : donazione
-
-[GestorePagamenti] .up. [Utente]
+[GestorePagamenti] .up. [Utente] : Donazione
 [GestorePagamenti] .down. [Opera]
 [GestorePagamenti] .down. [Evento]
-
+[GestoreFeed] .up. [GestoreInterazioni]
 [GestoreCollaborazioni] -down- mb1 : collaborazione
 
 [GestoreOpere]  ---up- mb1 : pubblicazione
