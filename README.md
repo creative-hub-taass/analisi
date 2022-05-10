@@ -27,7 +27,7 @@ minikube tunnel
 ```powershell
 minikube start
 $env:GATEWAY_URL = "http://localhost:8080"
-$env:GATEWAY_URL = "http://localhost:4200"
+$env:CLIENT_URL = "http://localhost:4200"
 Resolve-Path .\**\orchestration\*.yaml | Select -ExpandProperty Path | %{Get-Content $_ | envsubst | kubectl apply -f -}
 minikube tunnel
 ```
@@ -50,6 +50,6 @@ for f in ./**/orchestration/*.yaml; do cat $f | envsubst | kubectl apply -f -; d
 ```powershell
 okteto kubeconfig
 $env:GATEWAY_URL = "https://api-gateway-acontenti.cloud.okteto.net"
-$env:GATEWAY_URL = "https://creative-hub-client-taass-acontenti.cloud.okteto.net"
+$env:CLIENT_URL = "https://creative-hub-client-taass-acontenti.cloud.okteto.net"
 Resolve-Path .\**\orchestration\*.yaml | Select -ExpandProperty Path | %{Get-Content $_ | envsubst | kubectl apply -f -}
 ```
