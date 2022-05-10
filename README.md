@@ -17,6 +17,7 @@ Open a terminal in the folder which contains all the creativeHub projects reposi
 ```shell
 minikube start
 export GATEWAY_URL=http://localhost:8080
+export CLIENT_URL=https://localhost:4200
 for f in ./**/orchestration/*.yaml; do cat $f | envsubst | kubectl apply -f -; done
 minikube tunnel
 ```
@@ -26,6 +27,7 @@ minikube tunnel
 ```powershell
 minikube start
 $env:GATEWAY_URL = "http://localhost:8080"
+$env:GATEWAY_URL = "http://localhost:4200"
 Resolve-Path .\**\orchestration\*.yaml | Select -ExpandProperty Path | %{Get-Content $_ | envsubst | kubectl apply -f -}
 minikube tunnel
 ```
@@ -39,6 +41,7 @@ Open a terminal in the folder which contains all the creativeHub projects reposi
 ```shell
 okteto kubeconfig
 export GATEWAY_URL=https://api-gateway-acontenti.cloud.okteto.net
+export CLIENT_URL=https://creative-hub-client-taass-acontenti.cloud.okteto.net
 for f in ./**/orchestration/*.yaml; do cat $f | envsubst | kubectl apply -f -; done
 ```
 
@@ -47,5 +50,6 @@ for f in ./**/orchestration/*.yaml; do cat $f | envsubst | kubectl apply -f -; d
 ```powershell
 okteto kubeconfig
 $env:GATEWAY_URL = "https://api-gateway-acontenti.cloud.okteto.net"
+$env:GATEWAY_URL = "https://creative-hub-client-taass-acontenti.cloud.okteto.net"
 Resolve-Path .\**\orchestration\*.yaml | Select -ExpandProperty Path | %{Get-Content $_ | envsubst | kubectl apply -f -}
 ```
