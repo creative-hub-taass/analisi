@@ -62,6 +62,7 @@ jobs:
       - run: for f in ./**/orchestration/*.yaml; do cat $f | envsubst | kubectl apply -f -; done
         env:
           GATEWAY_URL: ${{ format('https://api-gateway-{0}.cloud.okteto.net', github.event.inputs.namespace) }}
+          CLIENT_URL: ${{ format('https://creative-hub-client-{0}.cloud.okteto.net', github.event.inputs.namespace) }}
   load-sample-data:
     name: Load sample data
     if: ${{ github.event.inputs.loadSampleData == 'true' }}
