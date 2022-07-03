@@ -5,11 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       namespace:
-        type: choice
-        options:
-          - taass-acontenti
-          - taass-zathsl
-          - taass-alessiofamiani
+        type: text
         required: true
         description: Okteto namespace
       loadSampleData:
