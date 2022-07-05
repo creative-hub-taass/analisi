@@ -68,6 +68,8 @@ mb1 -right- [Utente] : pubblicazione/\ncollaborazione
 [GestorePagamenti] .up. [Utente] : Donazione
 [GestorePagamenti] .down. [Opera]
 [GestorePagamenti] .down. [Evento]
+[GestorePagamenti] .right. [mb1]
+[mb1] .down. [Opera]
 [GestoreFeed] .up. [GestoreInterazioni]
 [GestoreCollaborazioni] -down- mb1 : collaborazione
 
